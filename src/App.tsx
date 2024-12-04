@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import 'bulma/css/bulma.css';
 import './App.scss';
 
-const SORT_BY_NAME: string = 'name';
-const SORT_BY_LENGTH: string = 'length';
+interface SortBy {
+  name: string;
+  length: string;
+}
+
+const SORT_BY: SortBy = {
+  name: 'name',
+  length: 'length',
+};
 
 const sortGoods = (
   goods: string[],
-  sortParam: string,
+  sortParam: keyof SortBy,
   reverseQuery: boolean,
 ): string[] => {
   const goodsToSort = [...goods];
@@ -15,9 +22,9 @@ const sortGoods = (
   if (sortParam) {
     goodsToSort.sort((item1, item2) => {
       switch (sortParam) {
-        case SORT_BY_NAME:
+        case SORT_BY.name:
           return item1.localeCompare(item2);
-        case SORT_BY_LENGTH:
+        case SORT_BY.length:
           return item1.length - item2.length;
         default:
           return 0;
@@ -56,16 +63,16 @@ export const App: React.FC = () => {
       <div className="buttons">
         <button
           type="button"
-          onClick={() => setSortField(SORT_BY_NAME)}
-          className={`button is-info ${sortField === SORT_BY_NAME ? '' : 'is-light'}`}
+          onClick={() => setSortField(SORT_BY.name)}
+          className={`button is-info ${sortField === SORT_BY.name ? '' : 'is-light'}`}
         >
           Sort alphabetically
         </button>
 
         <button
           type="button"
-          onClick={() => setSortField(SORT_BY_LENGTH)}
-          className={`button is-success ${sortField === SORT_BY_LENGTH ? '' : 'is-light'}`}
+          onClick={() => setSortField(SORT_BY.length)}
+          className={`button is-success ${sortField === SORT_BY.length ? '' : 'is-light'}`}
         >
           Sort by length
         </button>
